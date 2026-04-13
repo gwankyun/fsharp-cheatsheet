@@ -1,46 +1,46 @@
 <div id="comments"></div>
 
-# Comments
+# 注释
 
-Block comments are placed between `(*` and `*)`. Line comments start from `//` and continue until the end of the line.
+块注释放在 `(*` 和 `*)` 之间。行注释从 `//` 开始，一直持续到行尾。
 
 ```fsharp
-(* This is block comment *)
+(* 这是块注释 *)
 
-// And this is a line comment
+// 而这是一个行注释
 ```
 
-XML doc comments come after `///` allowing us to use XML tags to generate documentation.
+XML 文档注释在 `///` 之后，允许我们使用 XML 标签生成文档。
 
 ```fsharp
-/// Double a number and add 1
+/// 将一个数字翻倍并加1
 let myFunction n = n * 2 + 1
 ```
 
 <div id="strings"></div>
 
-# Strings
+# 字符串
 
-F# `string` type is an alias for `System.String` type.
+F# 的 `string` 类型是 `System.String` 类型的别名。
 
 ```fsharp
-// Create a string using string concatenation
+// 使用字符串连接创建字符串
 let hello = "Hello" + " World"
 ```
 
-Use *verbatim strings* preceded by `@` symbol to avoid escaping control characters (except escaping `"` by `""`).
+使用带有 `@` 符号前缀的**逐字字符串**可以避免转义控制字符（除了使用 `""` 转义 `"` 之外）。
 
 ```fsharp
 let verbatimXml = @"<book title=""Paradise Lost"">"
 ```
 
-We don't even have to escape `"` with *triple-quoted strings*.
+使用**三引号字符串**时，我们甚至不需要转义 `"`。
 
 ```fsharp
 let tripleXml = """<book title="Paradise Lost">"""
 ```
 
-*Backslash strings* indent string contents by stripping leading spaces.
+**反斜杠字符串**通过去除前导空格来缩进字符串内容。
 
 ```fsharp
 let poem =
@@ -50,7 +50,7 @@ let poem =
         And with a fresh-cut quill."
 ```
 
-*String Slicing* is supported by using `[start..end]` syntax.
+**字符串切片**通过使用 `[start..end]` 语法来支持。
 
 ```fsharp
 let str = "Hello World"
@@ -58,67 +58,67 @@ let firstWord = str[0..4] // "Hello"
 let lastWord = str[6..] // "World"
 ```
 
-*String Interpolation* is supported by prefixing the string with `$` symbol. All of these will output `"Hello" \ World!`:
+**字符串插值**通过在字符串前添加 `$` 符号来支持。以下所有示例都会输出 `"Hello" \ World!`：
 
 ```fsharp
 let expr = "Hello"
 printfn " \"%s\" \\ World!" expr
 printfn $" \"{expr}\" \\ World!"
-printfn $" \"%s{expr}\" \\ World!" // using a format specifier
+printfn $" \"%s{expr}\" \\ World!" // 使用格式说明符
 printfn $@" ""{expr}"" \ World!"
 printfn $@" ""%s{expr}"" \ World!"
-printf  $@" ""%s{expr}"" \ World!"  // no newline
+printf  $@" ""%s{expr}"" \ World!"  // 无换行
 ```
 
-See [Strings (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/strings) for more on escape characters, byte arrays, and format specifiers.
+有关转义字符、字节数组和格式说明符的更多信息，请参阅 [Strings (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/strings)。
 
 <div id="basic-types-and-literals"></div>
 
-# Basic Types and Literals
+# 基本类型和字面量
 
-Use the `let` keyword to define values. Values are immutable by default, but can be modified if specified with the `mutable` keyword.
+使用 `let` 关键字定义值。默认情况下，值是不可变的，但如果使用 `mutable` 关键字指定，则可以修改。
 
 ```fsharp
 let myStringValue = "my string"
 let myIntValue = 10
 let myExplicitlyTypedIntValue: int = 10
 let mutable myMutableInt = 10
-myMutableInt <- 11  // use <- arrow to assign a new value
+myMutableInt <- 11  // 使用 <- 箭头赋新值
 ```
 
-*Integer Prefixes* for hexadecimal, octal, or binary
+**整数前缀**用于十六进制、八进制或二进制
 
 ```fsharp
 let numbers = (0x9F, 0o77, 0b1010)  // (159, 63, 10)
 ```
 
-*Literal Type Suffixes* for integers, floats, decimals, and ascii arrays
+**字面量类型后缀**用于整数、浮点数、小数和 ascii 数组
 
 ```fsharp
-let ( sbyte, byte   )  = ( 55y, 55uy )  // 8-bit integer
+let ( sbyte, byte   )  = ( 55y, 55uy )  // 8位整数
 
-let ( short, ushort )  = ( 50s, 50us )  // 16-bit integer
+let ( short, ushort )  = ( 50s, 50us )  // 16位整数
 
-let ( int,   uint   )  = ( 50,  50u  )  // 32-bit integer
+let ( int,   uint   )  = ( 50,  50u  )  // 32位整数
 
-let ( long,  ulong  )  = ( 50L, 50uL )  // 64-bit integer
+let ( long,  ulong  )  = ( 50L, 50uL )  // 64位整数
 
 let bigInt             = 9999999999999I // System.Numerics.BigInteger
 
-let float              = 50.0f          // signed 32-bit float
+let float              = 50.0f          // 有符号32位浮点数
 
-let double             = 50.0           // signed 64-bit float
+let double             = 50.0           // 有符号64位浮点数
 
-let scientific         = 2.3E+32        // signed 64-bit float
+let scientific         = 2.3E+32        // 有符号64位浮点数
 
-let decimal            = 50.0m          // signed 128-bit decimal
+let decimal            = 50.0m          // 有符号128位小数
 
-let byte               = 'a'B           // ascii character; 97uy
+let byte               = 'a'B           // ascii 字符; 97uy
 
-let byteArray          = "text"B        // ascii string; [|116uy; 101uy; 120uy; 116uy|]
+let byteArray          = "text"B        // ascii 字符串; [|116uy; 101uy; 120uy; 116uy|]
 ```
 
-*Primes* (or a tick `'` at the end of a label name) are idiomatic to functional languages and are included in F#. They are part of the identifier's name and simply indicate to the developer a variation of an existing value or function. For example:
+**撇号**（或标签名称末尾的单引号 `'`）是函数式语言的惯用写法，在 F# 中也有包含。它们是标识符名称的一部分，仅向开发者表明是现有值或函数的变体。例如：
 
 ```fsharp
 let x = 5
@@ -126,7 +126,7 @@ let x' = x + 1
 let x'' = x' + 1
 ```
 
-See [Literals (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/literals) for complete reference.
+完整参考请参见 [Literals (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/literals)。
 
 <div id="functions"></div>
 
