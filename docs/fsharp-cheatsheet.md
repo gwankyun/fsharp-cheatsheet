@@ -28,19 +28,19 @@ F# 的 `string` 类型是 `System.String` 类型的别名。
 let hello = "Hello" + " World"
 ```
 
-使用带有 `@` 符号前缀的**逐字字符串**可以避免转义控制字符（除了使用 `""` 转义 `"` 之外）。
+使用带有 `@` 符号前缀的*逐字字符串*可以避免转义控制字符（除了使用 `""` 转义 `"` 之外）。
 
 ```fsharp
 let verbatimXml = @"<book title=""Paradise Lost"">"
 ```
 
-使用**三引号字符串**时，我们甚至不需要转义 `"`。
+使用*三引号字符串*时，我们甚至不需要转义 `"`。
 
 ```fsharp
 let tripleXml = """<book title="Paradise Lost">"""
 ```
 
-**反斜杠字符串**通过去除前导空格来缩进字符串内容。
+*反斜杠字符串*通过去除前导空格来缩进字符串内容。
 
 ```fsharp
 let poem =
@@ -50,7 +50,7 @@ let poem =
         And with a fresh-cut quill."
 ```
 
-**字符串切片**通过使用 `[start..end]` 语法来支持。
+*字符串切片*通过使用 `[start..end]` 语法来支持。
 
 ```fsharp
 let str = "Hello World"
@@ -58,7 +58,7 @@ let firstWord = str[0..4] // "Hello"
 let lastWord = str[6..] // "World"
 ```
 
-**字符串插值**通过在字符串前添加 `$` 符号来支持。以下所有示例都会输出 `"Hello" \ World!`：
+*字符串插值*通过在字符串前添加 `$` 符号来支持。以下所有示例都会输出 `"Hello" \ World!`：
 
 ```fsharp
 let expr = "Hello"
@@ -70,7 +70,8 @@ printfn $@" ""%s{expr}"" \ World!"
 printf  $@" ""%s{expr}"" \ World!"  // 无换行
 ```
 
-有关转义字符、字节数组和格式说明符的更多信息，请参阅 [Strings (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/strings)。
+有关转义字符、字节数组和格式说明符的更多信息，请参阅 
+[Strings (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/strings)。
 
 <div id="basic-types-and-literals"></div>
 
@@ -86,13 +87,13 @@ let mutable myMutableInt = 10
 myMutableInt <- 11  // 使用 <- 箭头赋新值
 ```
 
-**整数前缀**用于十六进制、八进制或二进制
+*整数前缀*用于十六进制、八进制或二进制
 
 ```fsharp
 let numbers = (0x9F, 0o77, 0b1010)  // (159, 63, 10)
 ```
 
-**字面量类型后缀**用于整数、浮点数、小数和 ascii 数组
+*字面量类型后缀*用于整数、浮点数、小数和 ascii 数组
 
 ```fsharp
 let ( sbyte, byte   )  = ( 55y, 55uy )  // 8位整数
@@ -118,7 +119,8 @@ let byte               = 'a'B           // ascii 字符; 97uy
 let byteArray          = "text"B        // ascii 字符串; [|116uy; 101uy; 120uy; 116uy|]
 ```
 
-**撇号**（或标签名称末尾的单引号 `'`）是函数式语言的惯用写法，在 F# 中也有包含。它们是标识符名称的一部分，仅向开发者表明是现有值或函数的变体。例如：
+*撇号*（或标签名称末尾的单引号 `'`）是函数式语言的惯用写法，在 F# 中也有包含。
+它们是标识符名称的一部分，仅向开发者表明是现有值或函数的变体。例如：
 
 ```fsharp
 let x = 5
@@ -130,11 +132,11 @@ let x'' = x' + 1
 
 <div id="functions"></div>
 
-# Functions
+# 函数
 
-## `let` bindings
+## `let` 绑定
 
-Use the `let` keyword to define named functions.
+使用 `let` 关键字定义命名函数。管道和组合运算符
 
 ```fsharp
 let add n1 n2 = n1 + n2
@@ -142,26 +144,26 @@ let subtract n1 n2 = n1 - n2
 let negate num = -1 * num
 let print num = printfn $"The number is: {num}"
 ```
-## Pipe and Composition Operators
+## 管道和组合运算符
 
-Pipe operator `|>` is used to chain functions and arguments together.
+管道运算符 `|>` 用于将函数和参数链接在一起。
 
 ```fsharp
 let addTwoSubtractTwoNegateAndPrint num =
     num |> add 2 |> subtract 2 |> negate |> print
 ```
 
-Composition operator `>>` is used to compose functions:
+组合运算符 `>>` 用于组合函数：
 
 ```fsharp
 let addTwoSubtractTwoNegateAndPrint' =
     add 2 >> subtract 2 >> negate >> print
 ```
 
-Caution: The output is the _last_ argument to the next function.
+注意：输出是下一个函数的 _最后一个_ 参数。
 
 ```fsharp
-// `addTwoSubtractTwoNegateAndPrint 10` becomes:
+// `addTwoSubtractTwoNegateAndPrint 10` 变为：
 10
 |> add 2       //  2 + 10  = 12
 |> subtract 2  //  2 - 12  = -10
@@ -169,9 +171,9 @@ Caution: The output is the _last_ argument to the next function.
 |> print       // "The number is 10"
 ```
 
-## Anonymous functions
+## 匿名函数
 
-Anonymous, or "lambda" functions, are denoted by the `fun` keyword and the arrow operator `->`.
+匿名函数（也称为“lambda”函数）由 `fun` 关键字和箭头运算符 `->` 表示。
 
 ```fsharp
 let isDescending xs =
@@ -183,21 +185,21 @@ let suspiciousRecords =
     records
     |> Seq.filter (fun x -> x.Age >= 150)
 ```
-### _.Property shorthand
+### _.Property 简写
 
-If the lambda function has a single argument that is used in an atomic expression, the following shorthand has been available since F# 8:
+如果 lambda 函数只有一个参数，且该参数用于原子表达式中，自 F# 8 起可以使用以下简写形式：
 
 ```fsharp
 let names =
     people
-    |> List.map (fun person -> person.Name)   // regular lambda expression
+    |> List.map (fun person -> person.Name)   // 常规 lambda 表达式
 
 let names' =
     people
-    |> List.map _.Name    // _.Property shorthand
+    |> List.map _.Name    // _.Property 简写
 ```
 
-You may chain properties and methods together, so long as there is no "space" in the expression. E.g.:
+只要表达式中没有“空格”，你可以链式调用属性和方法。例如：
 
 ```fsharp
 let uppercaseNames =
@@ -206,47 +208,47 @@ let uppercaseNames =
 
 <div id="functions-unit-type"></div>
 
-## `unit` Type
+## `unit` 类型
 
-The `unit` type is a type that indicates the absence of a specific value. It is represented by `()`.
-The most common use is when you have a function that receives no parameters, but you need it to evaluate on every call:
+`unit` 类型是一种表示不存在特定值的类型，由 `()` 表示。
+最常见的用法是当你有一个不接收参数的函数，但需要它在每次调用时都重新求值：
 
 ```fsharp
-// Without unit, DateTime.Now is only evaluated once. The return value will never change.
+// 没有 unit 时，DateTime.Now 只被求值一次。返回值永远不会改变。
 let getCurrentDateTime = DateTime.Now
 
-// This version evalautes DateTime.Now every time you call it with a `unit` argument.
+// 这个版本在每次用 `unit` 参数调用时都会求值 DateTime.Now。
 let getCurrentDateTime2 () = DateTime.Now
 
-// How to call the function:
+// 如何调用该函数：
 let startTime = getCurrentDateTime2 ()
 ```
 
 <div id="functions-signatures"></div>
 
-## Signatures and Explicit Typing
+## 函数签名和显式类型
 
-Function signatures are useful for quickly learning the input and output of functions. The last type is the return type and all preceding types are the input types.
+函数签名对于快速了解函数的输入和输出非常有用。最后一个类型是返回类型，所有前面的类型是输入类型。
 
 ```fsharp
-int -> string                       // this defines a function that receives an integer; returns a string
-int -> int -> string                // two integer inputs; returns a string
-unit -> string                      // unit; returns a string
-string -> unit                      // accepts a string; no return
-(int * string) -> string -> string  // a tuple of int and string, and a string inputs; returns a string
+int -> string                       // 定义了一个接收整数并返回字符串的函数
+int -> int -> string                // 两个整数输入，返回字符串
+unit -> string                      // unit 输入，返回字符串
+string -> unit                      // 接受字符串，无返回值
+(int * string) -> string -> string  // 一个包含 int 和 string 的元组，以及一个 string 输入，返回字符串
 ```
 
-Most of the time, the compiler can determine the type of a parameter, but there are cases may you wish to be explicit or the compiler needs a hand.
-Here is a function with a signature `string -> char -> int` and the input and return types are explicit:
+大多数情况下，编译器可以确定参数的类型，但有些情况下你可能希望显式指定类型，或者编译器需要帮助。
+下面是一个签名为 `string -> char -> int` 的函数，其输入和返回类型都已显式指定：
 
 ```fsharp
 let countWordsStartingWithLetter (theString: string) (theLetter: char) : int =
     theString.Split ' '
-    |> Seq.where (fun (word: string) -> word.StartsWith theLetter)  // explicit typing in a lambda
+    |> Seq.where (fun (word: string) -> word.StartsWith theLetter)  // lambda 中的显式类型
     |> Seq.length
 ```
 
-Examples of functions that take [`unit`](#functions-unit-type) as arguments and return different [Collection](#collections) types.
+接受 [`unit`](#functions-unit-type) 作为参数并返回不同 [集合](#collections) 类型的函数示例：
 
 ```fsharp
 let getList (): int list = ...  // unit -> int list
@@ -254,7 +256,7 @@ let getArray (): int[] = ...
 let getSeq (): seq<int> = ...
 ```
 
-A complex declaration with an [Anonymous Record](#data-types-anonymous-records):
+带有 [匿名记录](#data-types-anonymous-records) 的复杂声明：
 
 ```fsharp
 let anonRecordFunc (record: {| Count: int; LeftAndRight: bigint * bigint |}) =
@@ -263,9 +265,9 @@ let anonRecordFunc (record: {| Count: int; LeftAndRight: bigint * bigint |}) =
 
 <div id="functions-recursive"></div>
 
-## Recursive Functions
+## 递归函数
 
-The `rec` keyword is used together with the `let` keyword to define a recursive function:
+`rec` 关键字与 `let` 关键字一起使用来定义递归函数：
 
 ```fsharp
 let rec fact x =
@@ -275,13 +277,17 @@ let rec fact x =
 
 ### TailCallAttribute
 
-In _tail recursive_ functions, the recursive call is the final operation in the function, with its result directly returned without a nested function call (and the stack usage that implies). This pattern allows the compiler to instead generate a loop equivalent of the nested invocation by reusing the current stack frame instead of allocating a new one for each call.
+在 _尾递归_ 函数中，递归调用是函数中的最终操作，其结果直接返回，没有嵌套的函数调用
+（以及由此带来的栈使用）。这种模式允许编译器通过重用当前栈帧而不是为每次调用分配
+新栈帧，来生成嵌套调用的等效循环。
 
-As a guardrail, you can use the "TailCall" attribute (since F# 8).
+作为一种保障措施，你可以使用“TailCall”属性（自 F# 8 起）。
 
-By default, the compiler will emit a warning if this attribute is used with a function that is not properly tail recursive. It is typically a good idea to elevate this warning to an error, either in your project file, or by using a [compiler option](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/compiler-messages/).
+默认情况下，如果将此属性用于非正确尾递归的函数，编译器会发出警告。通常，将此警告
+提升为错误是个好主意，可以在项目文件中设置，或者通过使用 
+[compiler option](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/compiler-messages/) 来实现。
 
-If we add this attribute to the previous example:
+如果我们将此属性添加到前面的示例中：
 
 ```fsharp
 [<TailCall>]
@@ -289,11 +295,11 @@ let rec fact x =
     if x < 1 then 1
     else x * fact (x - 1)
 ```
-...the compiler gives us this warning:
+...编译器会给出以下警告：
 ```
 Warning FS3569 : The member or function 'fact' has the 'TailCallAttribute' attribute, but is not being used in a tail recursive way.
 ```
-However, when refactored to be properly tail recursive by using an accumulator parameter, the warning goes away:
+然而，当通过使用累加器参数重构为正确的尾递归函数时，警告会消失：
 ```fsharp
 [<TailCall>]
 let rec factTail acc x =
@@ -301,9 +307,9 @@ let rec factTail acc x =
     else factTail (acc * x) (x - 1)
 ```
 
-### Mutually Recursive Functions
+### 相互递归函数
 
-Pairs or groups of functions that call each other are indicated by both `rec` and `and` keywords:
+相互调用的函数对或函数组通过 `rec` 和 `and` 关键字来表示：
 
 ```fsharp
 let rec even x =
@@ -319,14 +325,14 @@ and odd x =
 
 <div id="statically-resolved-type-parameters"></div>
 
-## Statically Resolved Type Parameters
+## 静态解析类型参数
 
-A *statically resolved type parameter* is a type parameter that is replaced with an actual type at compile time instead of at run time. They are primarily useful in conjunction with member constraints.
+*静态解析类型参数* 是一种在编译时而非运行时替换为实际类型的类型参数。它们的主要用途是与成员约束配合使用。
 
 ```fsharp
 let inline add x y = x + y
 let integerAdd = add 1 2
-let floatAdd = add 1.0f 2.0f // without `inline` on `add` function, this would cause a type error
+let floatAdd = add 1.0f 2.0f // 如果 `add` 函数没有 `inline`，这会导致类型错误
 ```
 
 ```fsharp
@@ -342,17 +348,17 @@ let idA = getId requestA  // "A"
 let idB = getId requestB  // "B"
 ```
 
-See [Statically Resolved Type Parameters (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/generics/statically-resolved-type-parameters) and [Constraints (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/generics/constraints) for more examples.
+有关更多示例，请参阅 [静态解析类型参数（MS Learn）](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/generics/statically-resolved-type-parameters)和 [约束（MS Learn）](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/generics/constraints)。
 
 <div id="collections"></div>
 
-# Collections
+# 集合
 
 <div id="collections-lists"></div>
 
-## Lists
+## 列表
 
-*Lists* are immutable collections of elements of the same type; implemented internally as a linked list.
+*列表*是相同类型元素的不可变集合；在内部实现为链表。
 
 ```fsharp
 // Create
@@ -360,21 +366,21 @@ let list1 = [ "a"; "b" ]
 let list2 =
     [ 1
         2 ]
-let list3 = "c" :: list1   // prepending; [ "c"; "a"; "b" ]
-let list4 = list1 @ list3  // concat; [ "a"; "b"; "c"; "a"; "b" ]
-let list5 = [ 1..2..9 ]    // start..increment..last; [ 1; 3; 5; 7; 9 ]
+let list3 = "c" :: list1   // 前置添加；[ "c"; "a"; "b" ]
+let list4 = list1 @ list3  // 连接；[ "a"; "b"; "c"; "a"; "b" ]
+let list5 = [ 1..2..9 ]    // 开始..增量..结束；[ 1; 3; 5; 7; 9 ]
 
-// Slicing is inclusive
+// 切片是包含性的
 let firstTwo = list5[0..1]  // [ 1; 3 ]
 
-// Pattern matching
+// 模式匹配
 match myList with
-| [] -> ...            // empty list
-| [ 3 ] -> ...         // a single item, which is '3'
-| [ _; 4 ] -> ...      // two items, second item is '4'
-| head :: tail -> ...  // cons pattern; matches non-empty. `head` is the first item, `tail` is the rest
+| [] -> ...            // 空列表
+| [ 3 ] -> ...         // 单个元素，值为 '3'
+| [ _; 4 ] -> ...      // 两个元素，第二个元素为 '4'
+| head :: tail -> ...  // cons 模式；匹配非空列表。`head` 是第一个元素，`tail` 是剩余部分
 
-// Tail-recursion with a list, using cons pattern
+// 使用 cons 模式的列表尾递归
 [<TailCall>]
 let rec sumEachItem' (acc:int) (myList:int list) =
     match myList with
@@ -383,40 +389,39 @@ let rec sumEachItem' (acc:int) (myList:int list) =
 let sumEachItem (myList:int list) = sumEachItem' 0 myList
 ```
 
-See [Lists (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/lists) to learn more. See the [List Module](https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-listmodule.html) for built-in functions.
+有关更多信息，请参阅 [Lists (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/lists)。有关内置函数，请参阅 [List Module](https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-listmodule.html)。
 
 <div id="collections-arrays"></div>
 
-## Arrays
+## 数组
 
-*Arrays* are fixed-size, zero-based collections of consecutive data elements maintained as one block of memory. They are *mutable*; individual elements can be changed.
-
+*数组*是固定大小、从零开始的连续数据元素集合，作为一个内存块维护。它们是*可变的*；可以更改单个元素。
 
 ```fsharp
-// Create
+// 创建
 let array1 = [| "a"; "b"; "c" |]
 let array2 =
     [| 1
         2 |]
-let array3 = [| 1..2..9 |]  // start..increment..last; [| 1; 3; 5; 7; 9 |]
+let array3 = [| 1..2..9 |]  // 开始..增量..结束；[| 1; 3; 5; 7; 9 |]
 
-// Indexed access
+// 索引访问
 let first = array1[0]  // "a"
 
-// Slicing is inclusive; [| "a"; "b" |]
+// 切片是包含性的；[| "a"; "b" |]
 let firstTwo = array1[0..1]
 
-// Assignment using `<-`
+// 使用 `<-` 赋值
 array1[1] <- "d"  // [| "a"; "d"; "c" |]
 
-// Pattern matching
+// 模式匹配
 match myArray with
-| [||] -> ...        // match an empty array
-| [| 3 |] -> ...     // match array with single 3 item
-| [| _; 4 |] -> ...  // match array with 2 items, second item = 4
+| [||] -> ...        // 匹配空数组
+| [| 3 |] -> ...     // 匹配包含单个 3 元素的数组
+| [| _; 4 |] -> ...  // 匹配包含 2 个元素的数组，第二个元素 = 4
 ```
 
-See [Arrays (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/arrays) to learn more. See the [Array Module](https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-arraymodule.html) for built-in functions.
+有关更多信息，请参阅 [Arrays (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/arrays)。有关内置函数，请参阅 [Array Module](https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-arraymodule.html)。
 
 <div id="collections-sequences"></div>
 
