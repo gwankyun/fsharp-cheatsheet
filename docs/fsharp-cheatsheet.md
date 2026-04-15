@@ -425,31 +425,33 @@ match myArray with
 
 <div id="collections-sequences"></div>
 
-## Sequences
+## 序列
 
-A *sequence* is a logical series of elements of the same type. Sequences are lazily evaluated, and individual elements are computed only as required. `seq<'t>` is an alias for [`System.Collections.Generic.IEnumerable<'t>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1).
+*序列*是相同类型元素的逻辑系列。序列是延迟计算的，仅在需要时才计算单个元素。
+`seq<'t>` 是 [`System.Collections.Generic.IEnumerable<'t>`](https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1) 的别名。
 
 ```fsharp
-let emptySeq : int seq = seq { } // empty works as of F# 9
+let emptySeq : int seq = seq { } // 空序列在 F# 9 中可用
 let seq1 = { 1; 2 }
 let seq2 = seq {
         1
         2 }
-let seq3 = seq { 1..2..9 }  // start..increment..last; 1,3,5,7,9
+let seq3 = seq { 1..2..9 }  // 开始..增量..结束； 1,3,5,7,9
 ```
 
-See [Sequences (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/sequences) to learn more. See the [Seq Module](https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html) for built-in functions.
+有关更多信息，请参阅 [Sequences (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/sequences)。
+有关内置函数，请参阅 [Seq Module](https://fsharp.github.io/fsharp-core-docs/reference/fsharp-collections-seqmodule.html)。
 
-## Collection comprehension
+## 集合推导式
 
-- Computed expressions with `->`. Results in _1, 3, 5, 7, 9_
+- 使用 `->` 的计算表达式。结果为 _1, 3, 5, 7, 9_
     ```fsharp
     let listComp  = [ for i in 0..4 -> 2 * i + 1 ]
     let arrayComp = [| for i in 0..4 -> 2 * i + 1 |]
     let seqComp   = seq { for i in 0..4 -> 2 * i + 1 }
     ```
 
-- Using computed expressions with `yield` and `yield!`. (`yield` is optional in a `do`, but is being used explicitly here):
+- 用带有 `yield` 和 `yield!` 的计算表达式。（在 `do` 中 `yield` 是可选的，但此处显式使用）：
     ```fsharp
     let comprehendedList = [  // [ 1;3;5;7;9 ]
         for i in 0..4 do
@@ -468,45 +470,45 @@ See [Sequences (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/langu
 
 <div id="data-types"></div>
 
-# Data Types
+# 数据类型
 
 <div id="data-types-tuples"></div>
 
-## Tuples
+## 元组
 
-A *tuple* is a grouping of unnamed but ordered values, possibly of different types:
+*元组*是一组未命名但有序的值，可能具有不同类型：
 
 ```fsharp
-// Construction
+// 构造
 let numberAndWord = (1, "Hello")
 let numberAndWordAndNow = (1, "Hello", System.DateTime.Now)
 
-// Deconstruction
+// 解构
 let (number, word) = numberAndWord
 let (_, _, now) = numberAndWordAndNow
 
-// fst and snd functions for two-item tuples:
+// 用于两个元素元组的 fst 和 snd 函数：
 let number = fst numberAndWord
 let word = snd numberAndWord
 
-// Pattern matching
+// 模式匹配
 let printNumberAndWord numberAndWord =
     match numberAndWord with
     | (1, word) -> printfn $"One: %s{word}"
     | (2, word) -> printfn $"Two: %s{word}"
     | (_, word) -> printfn $"Number: %s{word}"
 
-// Function parameter deconstruction
+// 函数参数解构
 let printNumberAndWord' (number, word) = printfn $"%d{number}: %s{word}"
 ```
 
-In C#, if a method has an `out` parameter (e.g. [`DateTime.TryParse`](https://learn.microsoft.com/en-us/dotnet/api/system.datetime.tryparse)) the `out` result will be part of a tuple.
+在 C# 中，如果方法有 `out` 参数（例如 [`DateTime.TryParse`](https://learn.microsoft.com/en-us/dotnet/api/system.datetime.tryparse)），`out` 结果将成为元组的一部分。
 
 ```fsharp
 let (success, outParsedDateTime) = System.DateTime.TryParse("2001/02/06")
 ```
 
-See [Tuples (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/tuples) to learn more.
+有关更多信息，请参阅 [Tuples (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/tuples)。
 
 <div id="data-types-records"></div>
 
