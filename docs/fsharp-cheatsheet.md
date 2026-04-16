@@ -512,48 +512,48 @@ let (success, outParsedDateTime) = System.DateTime.TryParse("2001/02/06")
 
 <div id="data-types-records"></div>
 
-## Records
+## 记录类型
 
-*Records* represent aggregates of named values. They are sealed classes with extra toppings: default immutability, structural equality, and pattern matching support.
+*记录类型*表示命名值的聚合。它们是带有额外特性的密封类：默认不可变性、结构相等性和模式匹配支持。
 
 ```fsharp
-// Declare
+// 声明
 type Person = { Name: string; Age: int }
 type Car =
     { Make: string
         Model: string
         Year: int }
 
-// Create
+// 创建
 let paul = { Name = "Paul"; Age = 28 }
 
-// Copy and Update
+// 复制和更新
 let paulsTwin = { paul with Name = "Jim" }
 
-// Built-in equality
+// 内置相等性
 let evilPaul = { Name = "Paul"; Age = 28 }
 paul = evilPaul  // true
 
-// Pattern matching
+// 模式匹配
 let isPaul person =
     match person with
     | { Name = "Paul" } -> true
     | _ -> false
 ```
 
-See [Records (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/records) to learn more; including `struct`-based records.
+有关更多信息，包括基于 `struct` 的记录，请参阅 [Records (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/records)。
 
 <div id="data-types-anonymous-records"></div>
 
-## Anonymous Records
+## 匿名记录
 
-*Anonymous Records* represent aggregates of named values, but do not need declaring before use.
+*匿名记录*表示命名值的聚合，但不需要在使用前声明。
 
 ```fsharp
-// Create
+// 创建
 let anonRecord1 = {| Name = "Don Syme"; Language = "F#"; Age = 999 |}
 
-// Copy and Update
+// 复制和更新
 let anonRecord2 = {| anonRecord1 with Name = "Mads Torgersen"; Language = "C#" |}
 
 let getCircleStats (radius: float) =
@@ -562,7 +562,7 @@ let getCircleStats (radius: float) =
         Area = System.Math.PI * (radius ** 2.0)
         Circumference = 2.0 * System.Math.PI * radius |}
 
-// Signature
+// 签名
 let printCircleStats (circle: {| Radius: float; Area: float; Circumference: float; Diameter: float |}) =
     printfn $"Circle with R=%f{circle.Radius}; D=%f{circle.Diameter}; A=%f{circle.Area}; C=%f{circle.Circumference}"
 
@@ -570,27 +570,27 @@ let cc = getCircleStats 2.0
 printCircleStats cc
 ```
 
-See [Anonymous Records (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/anonymous-records) to learn more; including `struct`-based anonymous records.
+有关更多信息，包括基于 `struct` 的匿名记录，请参阅 [Anonymous Records (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/anonymous-records)。
 
 <div id="data-types-discriminated-unions"></div>
 
-## Discriminated Unions
+## 可区分联合
 
-*Discriminated unions* (DU) provide support for values that can be one of a number of named cases, each possibly with different values and types.
+*可区分联合* (DU) 提供对值的支持，这些值可以是多个命名情况之一，每个情况可能具有不同的值和类型。
 
 ```fsharp
-// Declaration
+// 声明
 type Interaction =
     | Keyboard of char
     | KeyboardWithModifier of char * modifier: System.ConsoleModifiers
     | MouseClick of countOfClicks: int
 
-// Create
+// 创建
 let interaction1 = MouseClick 1
 let interaction2 = MouseClick (countOfClicks = 2)
 let interaction3 = KeyboardWithModifier ('c', System.ConsoleModifiers.Control)
 
-// Pattern matching
+// 模式匹配
 match interaction3 with
 | Keyboard chr -> $"Character: {chr}"
 | KeyboardWithModifier (chr, modifier) -> $"Character: {modifier}+{chr}"
@@ -598,7 +598,7 @@ match interaction3 with
 | MouseClick (countOfClicks = x) -> $"Clicked: {x}"
 ```
 
-Generics
+泛型
 
 ```fsharp
 type Tree<'T> =
@@ -611,7 +611,7 @@ let rec depth =
     | Leaf -> 0
 ```
 
-F# Core has built-in discriminated unions for error handling, e.g., [`option`](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/options) and [`Result`](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/results).
+F# Core 为错误处理提供了内置的可区分联合，例如 [`option`](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/options) 和 [`Result`](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/results)。
 
 ```fsharp
 let optionPatternMatch input =
@@ -625,46 +625,46 @@ let resultPatternMatch input =
     | Error value -> $"Error: %d{value}"
 ```
 
-Single-case discriminated unions are often used to create type-safe abstractions with pattern matching support:
+单例可区分联合通常用于创建具有模式匹配支持的类型安全抽象：
 
 ```fsharp
 type OrderId = Order of string
 
-// Create a DU value
+// 创建 DU 值
 let orderId = Order "12"
 
-// Use pattern matching to deconstruct single-case DU
+// 使用模式匹配解构单例 DU
 let (Order id) = orderId  // id = "12"
 ```
 
-See [Discriminated Unions](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/discriminated-unions) to learn more.
+有关更多信息，请参阅 [Discriminated Unions](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/discriminated-unions)。
 
 <div id="pattern-matching"></div>
 
-# Pattern Matching
+# 模式匹配
 
-Patterns are a core concept that makes the F# language and other MLs very powerful.
-They are found in `let` bindings, `match` expressions, lambda expressions, and [exceptions](#exceptions).
+模式是一个核心概念，使 F# 语言和其他 ML 语言非常强大。
+它们出现在 `let` 绑定、`match` 表达式、 lambda 表达式和[异常](#exceptions)中。
 
-The matches are evaluated top-to-bottom, left-to-right; and the first one to match is selected.
+匹配按从上到下、从左到右的顺序评估；选择第一个匹配的模式。
 
-Examples of pattern matching in [Collections](#collections) and [Data Types](#data-types) can be found in their corresponding sections.
-Here are some additional patterns:
+[集合](#collections)和[数据类型](#data-types)中的模式匹配示例可以在相应部分找到。
+以下是一些其他模式：
 
 ```fsharp
 match intValue with
-| 0 -> "Zero"                  // constant pattern
-| 1 | 2 -> "One or Two"        // OR pattern with constants
-| x -> $"Something else: {x}"  // variable pattern; assign value to x
+| 0 -> "Zero"                  // 常量模式
+| 1 | 2 -> "One or Two"        // 带常量的 OR 模式
+| x -> $"Something else: {x}"  // 变量模式；将值分配给 x
 
 match tupleValue with
-| (_ ,3) & (x, y) -> $"{x}, 3"  // AND pattern with a constant and variable; matches 3 and assign 3 to x
-| _ -> "Wildcard"               // underscore matches anything
+| (_ ,3) & (x, y) -> $"{x}, 3"  // 带常量和变量的 AND 模式；匹配 3 并将 3 分配给 x
+| _ -> "Wildcard"               // 下划线匹配任何内容
 ```
 
-## `when` Guard clauses
+## `when` 守卫子句
 
-In order to match sophisticated inputs, one can use `when` to create filters, or guards, on patterns:
+为了匹配复杂的输入，可以使用 `when` 为模式创建过滤器或守卫：
 
 ```fsharp
 match num with
@@ -673,9 +673,9 @@ match num with
 | x -> 1
 ```
 
-## Pattern matching `function`
+## 模式匹配 `function`
 
-The `let..match..with` statement can be simplified using just the `function` statement:
+可以使用 `function` 语句简化 `let..match..with` 语句：
 
 ```fsharp
 let filterNumbers num =
@@ -683,12 +683,12 @@ let filterNumbers num =
         | 1 | 2 | 3 -> printfn "Found 1, 2, or 3!"
         | a -> printfn "%d" a
 
-let filterNumbers' =  // the parameter and `match num with` are combined
+let filterNumbers' =  // 参数和 `match num with` 被组合
     function | 1 | 2 | 3 -> printfn "Found 1, 2, or 3!"
              | a -> printfn "%d" a
 ```
 
-See  [Pattern Matching (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/pattern-matching) to learn more.
+有关更多信息，请参阅 [Pattern Matching (MS Learn)](https://learn.microsoft.com/en-us/dotnet/fsharp/language-reference/pattern-matching) 。
 
 <div id="exceptions"></div>
 
